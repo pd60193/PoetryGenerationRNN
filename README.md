@@ -1,9 +1,9 @@
 # PoetryGenerationRNN
-The aim of this project is to generate poetry using an RNN. We perform unsupervised learning for 1500 lines of Robert Frost's poems. Following the training, we attempt to generate 4 lines of poetry which would mimick his style.
+This project genrates poetry using a recurrent neural network with unsupervised machine learning on 1500 lines of Robert Frost's poems. The aim of the project is to generate a few lines of similar poetry as Robert Frost.
 
 ## Dataset
 
-The **util/robert_frost.txt** contains poetry lines from Robert Frost's Poems. We train our model on this data to remember words and their structure. We create a vocabulary vector for each line in the poetry. Each line is represented by vocabulary vector of size V where v is the vocabuylary space. Also V[i] = j, where i is the position of the word in the vocabulary space and j is the position of the word in the given line.
+The **util/robert_frost.txt** contains poetry lines from Robert Frost's Poems. We train our recurrent model to learn this data and understand the pattern. First, we create a word to index dictionary which contatins a mapping between every unique word and an integer index. Following this we create an input vocabulary vector(V) for each line **l** in the poetry. Line **l** may contain m words, so the vector V would be of length m containing the indexes of the words from the word-to-index dictionary.In mathematical terms, V[i] = j, where i is the position of the word in the dictionary and j is the position of the word in the given line.
 
 ## Code
 
@@ -13,7 +13,7 @@ The file **PoetryGeneration/poetry_generation.py** contains the code for trainin
 
 - We use a Simple Recurrent unit with one layer and 500 hidden units. The input to this layer is the Word Vector of size D and output is a vocabulary vector of size V. The input and output are as follows
 
-    * **Input is a Vector of size D**: This is the word vector signifying the features of a particular word by D weights. It has been created by transformation of vocabulary vector of size (V). The vocabulary vector V contains the word indexes from the vocabulary dictionary in the order in which they appear in that line. In addition it contains a "0" as the first element signifying the start of a line.
+    * **Input is a Vector of size D**: This is the word vector signifying the features of a particular word by D weights. It has been created by transformation of vocabulary vector of size (V). The vocabulary vector V contains the word indexes from the word-to-index dictionary in the order in which they appear in that line. In addition it contains a "0" as the first element signifying the start of a line.
     Hence, "I love you" would generate a vector V = [0,4,2,3] if the vocabulary dictionary is defined as D = {"love":2, "you":3, "I":4, "caught":5,  "sugar":6, "but":7}.
 
     * **Output is a vector of size V** : This is the output vector which contains the same number of elements as the input vocabulary vector. The last value in the vector is the prediction. If the last value is "1", it signifies "End of Line".
