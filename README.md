@@ -11,14 +11,14 @@ The file **PoetryGeneration/poetry_generation.py** contains the code for trainin
 
 - We use a **Word Embedding Layer** where we transform input for each line from V-sized vector to a D-sized vector where D<<<V. This transformation is brought by the **Word Embedding Matrix (We)** of size V X D. The weights of this matrix is trained over time. This reduces the amount of memory required and also makes it computationally more efficient.
 
-- We use a Simple Recurrent unit with one layer and 500 hidden units. The input to this layer is the Word Vector of size D and output is a vocabulary vector of size V. The input and output are as follows
+- We use a Simple Recurrent unit with one layer and 500 hidden units. The input to this layer is the Word Vector of size D for every word and output is a single word which follows the input sequence. The input and output are as follows
 
-    * **Input is a Vector of size D**: This is the word vector signifying the features of a particular word by D weights. It has been created by transformation of vocabulary vector of size (V). The vocabulary vector V contains the word indexes from the word-to-index dictionary in the order in which they appear in that line. In addition it contains a "0" as the first element signifying the start of a line.
+    * **Input is a Vector of size D for each word**: This is the word vector signifying the features of a particular word by D weights. It has been created by transformation of vocabulary vector of size (V). The vocabulary vector V contains the word indexes from the word-to-index dictionary in the order in which they appear in that line. In addition it contains a "0" as the first element signifying the start of a line.
     Hence, "I love you" would generate a vector V = [0,4,2,3] if the vocabulary dictionary is defined as D = {"love":2, "you":3, "I":4, "caught":5,  "sugar":6, "but":7}.
 
-    * **Output is a vector of size V** : This is the output vector which contains the same number of elements as the input vocabulary vector. The last value in the vector is the prediction. If the last value is "1", it signifies "End of Line".
-    For the above example, the output could be V = [3,1,2,6] signifying the sentence "I love you but".
-    The ouput could also be V = [4,2,3,1] signifying "I love you[EOL]" (EOL = end of line).
+    * **Output is a word which follows the input sequence** : This is the output vector which contains the same number of elements as the input vocabulary vector. The last value in the vector is the prediction. If the last value is "1", it signifies "End of Line".
+    For the above example, the output could be V = [3,1,2,6] signifying the sentence "I love you but". Hence, the word "but" is the output word.
+    The ouput could also be V = [4,2,3,1] signifying "I love you[EOL]" (EOL = end of line). Here "EOL" is the output word
 
 
 ## Utility Code
@@ -33,3 +33,5 @@ The Utility Code is in the util_parity.py file contains the following functions 
 ## Output
 
 After running for 2000 iterations and a learning rate of 0.0001, I got an classification rate of 0.70. 
+
+it also generated a 4 line poem and it was fairly decent.
